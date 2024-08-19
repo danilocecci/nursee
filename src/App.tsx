@@ -8,6 +8,7 @@ export function App() {
   const [dayOfSearch, setDayOfSearch] = useState<String>()
   const [workingThatDay, setWorkingThatDay] = useState<Boolean>(true)
   const [daysOff, setDaysOff] = useState<Array<String>>()
+  const [dateInputValue, setDateInputValue] = useState('')
 
   const date = new Date(Date.now())
   const currentMonth = date.toLocaleDateString('pt-BR',{month: 'long'})
@@ -37,6 +38,7 @@ export function App() {
     event.preventDefault()
 
     const {value} = event.currentTarget.querySelector('#date-input') as HTMLInputElement
+    setDateInputValue(value)
 
     if(value.length == 0) return
 
@@ -115,7 +117,7 @@ export function App() {
               </form>
               {
                 dayOfSearch && 
-                  <p>No dia {dayOfSearch} de {fullDateOfSearch?.toLocaleString('pt-BR', {month: 'long'})} você <span className="font-bold">{workingThatDay ? 'trabalha' : 'não trabalha'}</span>.</p>
+                  <p>No dia {dayOfSearch} de {fullDateOfSearch?.toLocaleString('pt-BR', {month: 'long'})} você <span className="font-bold">{!daysOff?.includes(dateInputValue) && workingThatDay ? 'trabalha' : 'não trabalha'}</span>.</p>
               }
             </div>
           </>
